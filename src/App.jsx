@@ -8,6 +8,8 @@ import Dashboard from './sections/Dashboard.jsx'
 import Quotes from './sections/Quotes.jsx'
 import Intelligence from './sections/Intelligence.jsx'
 import Funnel from './sections/Funnel.jsx'
+import Kaizen from './sections/Kaizen.jsx'
+import AIAssistant from './sections/AIAssistant.jsx'
 
 const NAV = [
   { id: 'pipeline',     label: 'Pipeline',      icon: '⬜' },
@@ -17,6 +19,8 @@ const NAV = [
   { id: 'quotes',       label: 'Cotizaciones',  icon: '📄' },
   { id: 'intelligence', label: 'Inteligencia',  icon: '🧠' },
   { id: 'funnel',       label: 'Embudo',        icon: '🔻' },
+  { id: 'kaizen',       label: 'Kaizen',        icon: '🔄' },
+  { id: 'assistant',    label: 'Asistente IA',  icon: '🧠' },
   { id: 'dashboard',    label: 'Dashboard',     icon: '📊' },
 ]
 
@@ -33,6 +37,8 @@ export default function App() {
     quotes: Quotes,
     intelligence: Intelligence,
     funnel: Funnel,
+    kaizen: Kaizen,
+    assistant: AIAssistant,
     dashboard: Dashboard,
   }[section] || Pipeline
 
