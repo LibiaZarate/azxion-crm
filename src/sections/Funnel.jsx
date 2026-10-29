@@ -40,8 +40,18 @@ export default function Funnel({ crm }) {
     return { ...s, avgDays: Math.round(totalDays / inStage.length) }
   })
 
+  const cfg = crm?.clientConfig
+
   return (
     <div>
+      {cfg && (
+        <div style={{ display: 'flex', gap: 12, marginBottom: 20, padding: 16, background: '#f0fdf4', borderRadius: 12, border: '1px solid #bbf7d0', flexWrap: 'wrap', alignItems: 'center' }}>
+          <span style={{ fontSize: 13, fontWeight: 700, color: '#16a34a' }}>Metas de {cfg.nombre_negocio}:</span>
+          {cfg.meta_conversion && <span style={{ background: '#dcfce7', padding: '4px 12px', borderRadius: 8, fontSize: 12, fontWeight: 600, color: '#166534' }}>Conversión meta: {cfg.meta_conversion}%</span>}
+          {cfg.meta_cierre_mensual && <span style={{ background: '#dcfce7', padding: '4px 12px', borderRadius: 8, fontSize: 12, fontWeight: 600, color: '#166534' }}>Cierres/mes: {cfg.meta_cierre_mensual}</span>}
+          {cfg.ciclo_venta_dias && <span style={{ background: '#dbeafe', padding: '4px 12px', borderRadius: 8, fontSize: 12, fontWeight: 600, color: '#1e40af' }}>Ciclo venta: {cfg.ciclo_venta_dias} días</span>}
+        </div>
+      )}
       {/* Visual funnel */}
       <div style={S.funnelWrap}>
         <h3 style={S.title}>Embudo de conversión</h3>

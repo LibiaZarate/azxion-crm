@@ -37,9 +37,11 @@ export default function AIAssistant({ crm }) {
 
     setTimeout(() => {
       const match = DEMO_CONVERSATIONS.find(c => c.q.toLowerCase().includes(q.toLowerCase().slice(0, 20)))
+      const cfg = crm.clientConfig
+      const cfgContext = cfg ? `\n\n**Contexto del Segundo Cerebro (${cfg.nombre_negocio}):**\n- KPI norte: ${cfg.kpi_norte || 'No definido'}\n- Meta cierres: ${cfg.meta_cierre_mensual || '—'}/mes\n- Meta conversión: ${cfg.meta_conversion || '—'}%\n- Tiempo respuesta meta: < ${cfg.meta_tiempo_respuesta || '—'} min\n- Tono: ${cfg.tono || '—'}\n- Canales: ${cfg.canales_activos?.join(', ') || 'No definidos'}` : ''
       const response = match || {
-        a: `Basándome en la data de tu CRM, aquí va mi análisis:\n\nTu pipeline tiene ${crm.stats.open.length} oportunidades abiertas por un valor total de $${fmt(crm.stats.pipelineValue)} MXN. ${crm.stats.won.length} deals ganados ($${fmt(crm.stats.wonValue)}) y ${crm.stats.lost.length} perdidos.\n\nEl deal con mejor score es "${[...crm.deals].sort((a, b) => (b.score || 0) - (a.score || 0))[0]?.title}" con score de ${[...crm.deals].sort((a, b) => (b.score || 0) - (a.score || 0))[0]?.score}.\n\n📌 *Fuente: Dashboard CRM, datos en tiempo real*\n\n¿Quieres que profundice en algún deal o métrica específica?`,
-        sources: ['Dashboard CRM', 'Pipeline en tiempo real'],
+        a: `Basándome en la data de tu CRM, aquí va mi análisis:\n\nTu pipeline tiene ${crm.stats.open.length} oportunidades abiertas por un valor total de $${fmt(crm.stats.pipelineValue)} MXN. ${crm.stats.won.length} deals ganados ($${fmt(crm.stats.wonValue)}) y ${crm.stats.lost.length} perdidos.\n\nEl deal con mejor score es "${[...crm.deals].sort((a, b) => (b.score || 0) - (a.score || 0))[0]?.title}" con score de ${[...crm.deals].sort((a, b) => (b.score || 0) - (a.score || 0))[0]?.score}.${cfgContext}\n\n📌 *Fuente: Dashboard CRM, datos en tiempo real*\n\n¿Quieres que profundice en algún deal o métrica específica?`,
+        sources: cfg ? ['Dashboard CRM', 'Pipeline en tiempo real', 'Segundo Cerebro'] : ['Dashboard CRM', 'Pipeline en tiempo real'],
       }
       setMessages(prev => [...prev, { role: 'assistant', content: response.a, sources: response.sources }])
       setLoading(false)
@@ -152,6 +154,15 @@ export default function AIAssistant({ crm }) {
             <span style={S.contextLabel}>BI insights</span>
             <span style={S.contextValue}>{crm.biInsights.length}</span>
           </div>
+
+          {crm.clientConfig && (
+            <div style={{ marginTop: 16, padding: 14, background: '#f0fdf4', borderRadius: 10, border: '1px solid #bbf7d0' }}>
+              <h4 style={{ fontSize: 13, fontWeight: 700, margin: '0 0 8px', color: '#16a34a' }}>Segundo Cerebro: {crm.clientConfig.nombre_negocio}</h4>
+              {crm.clientConfig.icp_dolor_principal && <div style={{ fontSize: 12, color: '#166534', marginBottom: 4 }}>Dolor ICP: {crm.clientConfig.icp_dolor_principal.slice(0, 60)}</div>}
+              {crm.clientConfig.kpi_norte && <div style={{ fontSize: 12, color: '#166534', marginBottom: 4 }}>KPI norte: {crm.clientConfig.kpi_norte.slice(0, 60)}</div>}
+              {crm.clientConfig.tono && <div style={{ fontSize: 12, color: '#166534' }}>Tono: {crm.clientConfig.tono}</div>}
+            </div>
+          )}
 
           <div style={S.frameworkBox}>
             <h4 style={S.frameworkTitle}>Frameworks cargados</h4>
