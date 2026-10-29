@@ -53,7 +53,7 @@ function empty() {
   }
 }
 
-export default function Onboarding() {
+export default function Onboarding({ crm }) {
   const [step, setStep] = useState(0)
   const [data, setData] = useState(empty())
   const [submitted, setSubmitted] = useState(false)
@@ -72,6 +72,11 @@ export default function Onboarding() {
   }
   const addEtapa = () => set('etapas', [...data.etapas, { nombre: '', color: '#94a3b8' }])
   const removeEtapa = i => set('etapas', data.etapas.filter((_, j) => j !== i))
+
+  const handleSubmit = () => {
+    if (crm?.setClientConfig) crm.setClientConfig(data)
+    setSubmitted(true)
+  }
 
   if (submitted) {
     return (
@@ -339,7 +344,7 @@ export default function Onboarding() {
           {step < STEPS.length - 1 ? (
             <button onClick={() => setStep(step + 1)} style={S.nextBtn}>Siguiente →</button>
           ) : (
-            <button onClick={() => setSubmitted(true)} style={S.submitBtn}>Generar Segundo Cerebro →</button>
+            <button onClick={handleSubmit} style={S.submitBtn}>Generar Segundo Cerebro →</button>
           )}
         </div>
       </div>

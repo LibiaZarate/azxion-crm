@@ -5,7 +5,18 @@ import {
 } from '../data/supabase.js'
 
 export function useCRM() {
-  const [stages] = useState(DEMO_STAGES)
+  const [clientConfig, setClientConfig] = useState(null)
+
+  const stages = useMemo(() => {
+    if (!clientConfig?.etapas?.length) return DEMO_STAGES
+    return clientConfig.etapas.map((e, i) => ({
+      id: i + 1, name: e.nombre, color: e.color, position: i,
+      is_won: e.nombre.toLowerCase().includes('ganad'),
+      is_lost: e.nombre.toLowerCase().includes('perdid'),
+      probability: Math.round(((i + 1) / clientConfig.etapas.length) * 100),
+    }))
+  }, [clientConfig])
+
   const [deals, setDeals] = useState(DEMO_DEALS)
   const [activities, setActivities] = useState(DEMO_ACTIVITIES)
   const [contacts] = useState(DEMO_CONTACTS)
@@ -57,6 +68,7 @@ export function useCRM() {
   return {
     stages, deals, activities, contacts, companies, timeline, biInsights,
     moveDeal, toggleActivity, addDeal, addActivity, addTimelineEntry,
-    stats, demoMode: DEMO_MODE
+    stats, demoMode: DEMO_MODE,
+    clientConfig, setClientConfig
   }
 }

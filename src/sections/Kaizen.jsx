@@ -66,7 +66,8 @@ const STATUS_COLORS = {
   bloqueado: { bg: '#fef2f2', color: '#dc2626' },
 }
 
-export default function Kaizen() {
+export default function Kaizen({ crm }) {
+  const cfg = crm?.clientConfig
   const [tab, setTab] = useState('cycles')
   const [expandedCycle, setExpandedCycle] = useState(null)
 
@@ -84,6 +85,16 @@ export default function Kaizen() {
           </button>
         ))}
       </div>
+
+      {cfg && (
+        <div style={{ display: 'flex', gap: 12, marginBottom: 20, padding: 16, background: '#f0fdf4', borderRadius: 12, border: '1px solid #bbf7d0', flexWrap: 'wrap' }}>
+          <div style={{ fontSize: 13, fontWeight: 700, color: '#16a34a', width: '100%' }}>Métricas del Segundo Cerebro de {cfg.nombre_negocio}</div>
+          {cfg.meta_cierre_mensual && <span style={{ background: '#dcfce7', padding: '4px 12px', borderRadius: 8, fontSize: 12, fontWeight: 600, color: '#166534' }}>Meta cierres: {cfg.meta_cierre_mensual}/mes</span>}
+          {cfg.meta_tiempo_respuesta && <span style={{ background: '#dcfce7', padding: '4px 12px', borderRadius: 8, fontSize: 12, fontWeight: 600, color: '#166534' }}>Resp: &lt;{cfg.meta_tiempo_respuesta} min</span>}
+          {cfg.meta_conversion && <span style={{ background: '#dcfce7', padding: '4px 12px', borderRadius: 8, fontSize: 12, fontWeight: 600, color: '#166534' }}>Conversión: {cfg.meta_conversion}%</span>}
+          {cfg.kpi_norte && <span style={{ background: '#dbeafe', padding: '4px 12px', borderRadius: 8, fontSize: 12, fontWeight: 600, color: '#1e40af' }}>KPI norte: {cfg.kpi_norte}</span>}
+        </div>
+      )}
 
       {tab === 'cycles' && (
         <div>
