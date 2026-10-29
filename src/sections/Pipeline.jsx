@@ -73,7 +73,12 @@ export default function Pipeline({ crm }) {
                   onDragStart={e => handleDragStart(e, deal.id)}
                   style={{ ...S.card, opacity: dragId === deal.id ? 0.5 : 1 }}
                 >
-                  <div style={S.cardTitle}>{deal.title}</div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div style={S.cardTitle}>{deal.title}</div>
+                    {deal.score != null && (
+                      <span style={{ background: deal.score >= 70 ? '#dcfce7' : deal.score >= 40 ? '#fef9c3' : '#fef2f2', color: deal.score >= 70 ? '#16a34a' : deal.score >= 40 ? '#ca8a04' : '#dc2626', padding: '2px 6px', borderRadius: 6, fontSize: 11, fontWeight: 700 }}>{deal.score}</span>
+                    )}
+                  </div>
                   <div style={S.cardCompany}>{deal.company_name}</div>
                   <div style={S.cardBottom}>
                     <span style={S.cardAmount}>${fmt(deal.amount)}</span>

@@ -1,7 +1,7 @@
 import { useState, useCallback, useMemo } from 'react'
 import {
   DEMO_MODE, DEMO_STAGES, DEMO_DEALS, DEMO_ACTIVITIES,
-  DEMO_CONTACTS, DEMO_COMPANIES
+  DEMO_CONTACTS, DEMO_COMPANIES, DEMO_TIMELINE, DEMO_BI_INSIGHTS
 } from '../data/supabase.js'
 
 export function useCRM() {
@@ -10,6 +10,8 @@ export function useCRM() {
   const [activities, setActivities] = useState(DEMO_ACTIVITIES)
   const [contacts] = useState(DEMO_CONTACTS)
   const [companies] = useState(DEMO_COMPANIES)
+  const [timeline, setTimeline] = useState(DEMO_TIMELINE)
+  const [biInsights] = useState(DEMO_BI_INSIGHTS)
 
   const moveDeal = useCallback((dealId, newStageId) => {
     setDeals(prev => prev.map(d =>
@@ -33,6 +35,10 @@ export function useCRM() {
     setActivities(prev => [...prev, { ...activity, id: Math.max(0, ...prev.map(a => a.id)) + 1 }])
   }, [])
 
+  const addTimelineEntry = useCallback((entry) => {
+    setTimeline(prev => [...prev, { ...entry, id: Math.max(0, ...prev.map(t => t.id)) + 1, created_at: new Date().toISOString() }])
+  }, [])
+
   const stats = useMemo(() => {
     const open = deals.filter(d => {
       const st = stages.find(s => s.id === d.stage_id)
@@ -49,8 +55,8 @@ export function useCRM() {
   }, [deals, activities, stages])
 
   return {
-    stages, deals, activities, contacts, companies,
-    moveDeal, toggleActivity, addDeal, addActivity,
+    stages, deals, activities, contacts, companies, timeline, biInsights,
+    moveDeal, toggleActivity, addDeal, addActivity, addTimelineEntry,
     stats, demoMode: DEMO_MODE
   }
 }

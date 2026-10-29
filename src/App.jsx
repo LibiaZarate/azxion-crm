@@ -6,14 +6,18 @@ import Contacts from './sections/Contacts.jsx'
 import Activities from './sections/Activities.jsx'
 import Dashboard from './sections/Dashboard.jsx'
 import Quotes from './sections/Quotes.jsx'
+import Intelligence from './sections/Intelligence.jsx'
+import Funnel from './sections/Funnel.jsx'
 
 const NAV = [
-  { id: 'pipeline',   label: 'Pipeline',     icon: '⬜' },
-  { id: 'deals',      label: 'Oportunidades',icon: '💰' },
-  { id: 'contacts',   label: 'Contactos',    icon: '👥' },
-  { id: 'activities', label: 'Actividades',  icon: '📋' },
-  { id: 'quotes',     label: 'Cotizaciones', icon: '📄' },
-  { id: 'dashboard',  label: 'Dashboard',    icon: '📊' },
+  { id: 'pipeline',     label: 'Pipeline',      icon: '⬜' },
+  { id: 'deals',        label: 'Oportunidades', icon: '💰' },
+  { id: 'contacts',     label: 'Contactos',     icon: '👥' },
+  { id: 'activities',   label: 'Actividades',   icon: '📋' },
+  { id: 'quotes',       label: 'Cotizaciones',  icon: '📄' },
+  { id: 'intelligence', label: 'Inteligencia',  icon: '🧠' },
+  { id: 'funnel',       label: 'Embudo',        icon: '🔻' },
+  { id: 'dashboard',    label: 'Dashboard',     icon: '📊' },
 ]
 
 export default function App() {
@@ -27,6 +31,8 @@ export default function App() {
     contacts: Contacts,
     activities: Activities,
     quotes: Quotes,
+    intelligence: Intelligence,
+    funnel: Funnel,
     dashboard: Dashboard,
   }[section] || Pipeline
 

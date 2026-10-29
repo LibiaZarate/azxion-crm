@@ -7,7 +7,6 @@ export const supabase = url ? createClient(url, key) : null
 
 export const DEMO_MODE = !url
 
-// ── Demo data for running without Supabase ──────────────────────────────────
 export const DEMO_STAGES = [
   { id: 1, name: 'Nuevo',       position: 0, probability: 10, color: '#6366f1', is_won: false, is_lost: false },
   { id: 2, name: 'Calificado',  position: 1, probability: 30, color: '#8b5cf6', is_won: false, is_lost: false },
@@ -18,14 +17,14 @@ export const DEMO_STAGES = [
 ]
 
 export const DEMO_DEALS = [
-  { id: 1, title: 'Rediseño web corporativo', company_name: 'Grupo Torres', contact_name: 'María Torres', stage_id: 1, amount: 45000, currency: 'MXN', probability: 10, expected_close: '2026-11-15', source: 'referral', tags: ['web'], created_at: '2026-10-20T10:00:00Z' },
-  { id: 2, title: 'Sistema de inventarios', company_name: 'Distribuidora Norte', contact_name: 'Carlos Ruiz', stage_id: 2, amount: 120000, currency: 'MXN', probability: 30, expected_close: '2026-11-30', source: 'cold', tags: ['software'], created_at: '2026-10-15T10:00:00Z' },
-  { id: 3, title: 'App de delivery', company_name: 'Restaurantes MX', contact_name: 'Ana Vega', stage_id: 3, amount: 85000, currency: 'MXN', probability: 60, expected_close: '2026-12-01', source: 'web', tags: ['app', 'mobile'], created_at: '2026-10-10T10:00:00Z' },
-  { id: 4, title: 'CRM personalizado', company_name: 'Inmobiliaria del Pacífico', contact_name: 'Roberto Paz', stage_id: 3, amount: 200000, currency: 'MXN', probability: 60, expected_close: '2026-12-15', source: 'event', tags: ['crm'], created_at: '2026-10-05T10:00:00Z' },
-  { id: 5, title: 'E-commerce premium', company_name: 'Boutique Lina', contact_name: 'Lina Morales', stage_id: 4, amount: 95000, currency: 'MXN', probability: 80, expected_close: '2026-11-10', source: 'referral', tags: ['ecommerce'], created_at: '2026-09-28T10:00:00Z' },
-  { id: 6, title: 'Automatización WhatsApp', company_name: 'Clínica Salud+', contact_name: 'Dr. Méndez', stage_id: 5, amount: 35000, currency: 'MXN', probability: 100, expected_close: '2026-10-25', source: 'web', tags: ['automation'], created_at: '2026-09-20T10:00:00Z' },
-  { id: 7, title: 'Landing de campaña', company_name: 'Eventos GDL', contact_name: 'Sofía Luna', stage_id: 6, amount: 18000, currency: 'MXN', probability: 0, expected_close: '2026-10-20', source: 'ad', lost_reason: 'Presupuesto', tags: ['landing'], created_at: '2026-09-15T10:00:00Z' },
-  { id: 8, title: 'Dashboard analytics', company_name: 'Logística Express', contact_name: 'Juan Herrera', stage_id: 2, amount: 65000, currency: 'MXN', probability: 30, expected_close: '2026-12-20', source: 'cold', tags: ['dashboard', 'data'], created_at: '2026-10-22T10:00:00Z' },
+  { id: 1, title: 'Rediseño web corporativo', company_name: 'Grupo Torres', contact_name: 'María Torres', stage_id: 1, amount: 45000, currency: 'MXN', probability: 10, expected_close: '2026-11-15', source: 'referral', tags: ['web'], created_at: '2026-10-20T10:00:00Z', score: 35, first_response_min: 12, last_activity: '2026-10-27T14:00:00Z' },
+  { id: 2, title: 'Sistema de inventarios', company_name: 'Distribuidora Norte', contact_name: 'Carlos Ruiz', stage_id: 2, amount: 120000, currency: 'MXN', probability: 30, expected_close: '2026-11-30', source: 'cold', tags: ['software'], created_at: '2026-10-15T10:00:00Z', score: 55, first_response_min: 45, last_activity: '2026-10-26T09:00:00Z' },
+  { id: 3, title: 'App de delivery', company_name: 'Restaurantes MX', contact_name: 'Ana Vega', stage_id: 3, amount: 85000, currency: 'MXN', probability: 60, expected_close: '2026-12-01', source: 'web', tags: ['app', 'mobile'], created_at: '2026-10-10T10:00:00Z', score: 72, first_response_min: 3, last_activity: '2026-10-28T11:00:00Z' },
+  { id: 4, title: 'CRM personalizado', company_name: 'Inmobiliaria del Pacífico', contact_name: 'Roberto Paz', stage_id: 3, amount: 200000, currency: 'MXN', probability: 60, expected_close: '2026-12-15', source: 'event', tags: ['crm'], created_at: '2026-10-05T10:00:00Z', score: 68, first_response_min: 8, last_activity: '2026-10-25T16:00:00Z' },
+  { id: 5, title: 'E-commerce premium', company_name: 'Boutique Lina', contact_name: 'Lina Morales', stage_id: 4, amount: 95000, currency: 'MXN', probability: 80, expected_close: '2026-11-10', source: 'referral', tags: ['ecommerce'], created_at: '2026-09-28T10:00:00Z', score: 88, first_response_min: 2, last_activity: '2026-10-28T10:00:00Z' },
+  { id: 6, title: 'Automatización WhatsApp', company_name: 'Clínica Salud+', contact_name: 'Dr. Méndez', stage_id: 5, amount: 35000, currency: 'MXN', probability: 100, expected_close: '2026-10-25', source: 'web', tags: ['automation'], created_at: '2026-09-20T10:00:00Z', score: 95, first_response_min: 1, last_activity: '2026-10-25T17:00:00Z' },
+  { id: 7, title: 'Landing de campaña', company_name: 'Eventos GDL', contact_name: 'Sofía Luna', stage_id: 6, amount: 18000, currency: 'MXN', probability: 0, expected_close: '2026-10-20', source: 'ad', lost_reason: 'Presupuesto insuficiente', tags: ['landing'], created_at: '2026-09-15T10:00:00Z', score: 22, first_response_min: 180, last_activity: '2026-10-18T09:00:00Z' },
+  { id: 8, title: 'Dashboard analytics', company_name: 'Logística Express', contact_name: 'Juan Herrera', stage_id: 2, amount: 65000, currency: 'MXN', probability: 30, expected_close: '2026-12-20', source: 'cold', tags: ['dashboard', 'data'], created_at: '2026-10-22T10:00:00Z', score: 42, first_response_min: 90, last_activity: '2026-10-27T11:00:00Z' },
 ]
 
 export const DEMO_ACTIVITIES = [
@@ -55,4 +54,34 @@ export const DEMO_COMPANIES = [
   { id: 6, name: 'Clínica Salud+', industry: 'Salud', size: 'small', city: 'Guadalajara', state: 'Jalisco' },
   { id: 7, name: 'Eventos GDL', industry: 'Eventos', size: 'micro', city: 'Guadalajara', state: 'Jalisco' },
   { id: 8, name: 'Logística Express', industry: 'Logística', size: 'medium', city: 'Querétaro', state: 'Querétaro' },
+]
+
+export const DEMO_TIMELINE = [
+  { id: 1, deal_id: 3, type: 'note', content: 'Quiere integración con Rappi y UberEats. Tiene 12 sucursales.', created_at: '2026-10-10T10:30:00Z', author: 'Libia' },
+  { id: 2, deal_id: 3, type: 'stage_change', content: 'Nuevo → Calificado', created_at: '2026-10-12T09:00:00Z', author: 'Sistema' },
+  { id: 3, deal_id: 3, type: 'whatsapp', content: 'Ana: "Me interesa mucho, ¿pueden hacer una demo la próxima semana?"', created_at: '2026-10-14T15:20:00Z', author: 'Cliente' },
+  { id: 4, deal_id: 3, type: 'stage_change', content: 'Calificado → Propuesta', created_at: '2026-10-15T10:00:00Z', author: 'Sistema' },
+  { id: 5, deal_id: 3, type: 'call', content: 'Llamada de 25 min. Dolor: pierden pedidos porque el WhatsApp lo maneja una sola persona. Necesitan multi-agente.', created_at: '2026-10-18T11:00:00Z', author: 'Libia' },
+  { id: 6, deal_id: 3, type: 'note', content: 'Palabra clave: "estamos perdiendo pedidos por no contestar a tiempo". Urgencia alta.', created_at: '2026-10-18T11:30:00Z', author: 'IA' },
+  { id: 7, deal_id: 5, type: 'whatsapp', content: 'Lina: "Ya lo platiqué con mi socio. ¿Me pueden mandar el contrato?"', created_at: '2026-10-25T14:00:00Z', author: 'Cliente' },
+  { id: 8, deal_id: 5, type: 'stage_change', content: 'Propuesta → Negociación', created_at: '2026-10-25T14:05:00Z', author: 'Sistema' },
+  { id: 9, deal_id: 1, type: 'email', content: 'Enviada presentación de servicios y caso de éxito similar.', created_at: '2026-10-21T10:00:00Z', author: 'Libia' },
+  { id: 10, deal_id: 7, type: 'note', content: 'Razón de pérdida: presupuesto insuficiente. Dijo que vuelve en enero con presupuesto nuevo.', created_at: '2026-10-20T16:00:00Z', author: 'Libia' },
+  { id: 11, deal_id: 7, type: 'stage_change', content: 'Propuesta → Perdido', created_at: '2026-10-20T16:05:00Z', author: 'Sistema' },
+  { id: 12, deal_id: 2, type: 'call', content: 'Discovery call. 40 empleados, 3 bodegas, usan Excel para todo. Dolor: inventario no cuadra al final del mes.', created_at: '2026-10-17T14:00:00Z', author: 'Libia' },
+  { id: 13, deal_id: 2, type: 'note', content: 'Palabra clave: "cada mes perdemos mercancía y no sabemos cuánto". Problema cuantificable.', created_at: '2026-10-17T14:30:00Z', author: 'IA' },
+  { id: 14, deal_id: 4, type: 'whatsapp', content: 'Roberto: "Me gusta, pero necesito ver cómo se integra con lo que ya tenemos"', created_at: '2026-10-22T10:00:00Z', author: 'Cliente' },
+]
+
+export const DEMO_BI_INSIGHTS = [
+  { id: 1, type: 'pain', text: 'Pierden pedidos/clientes por no contestar a tiempo', deals: [3, 4], frequency: 3 },
+  { id: 2, type: 'pain', text: 'Información repartida en Excel/WhatsApp/cabeza', deals: [2, 4, 1], frequency: 5 },
+  { id: 3, type: 'pain', text: 'No saben cuánto están perdiendo (sin métricas)', deals: [2, 3], frequency: 2 },
+  { id: 4, type: 'keyword', text: 'integración', deals: [3, 4], frequency: 4 },
+  { id: 5, type: 'keyword', text: 'automatización', deals: [3, 6], frequency: 3 },
+  { id: 6, type: 'keyword', text: 'presupuesto', deals: [7], frequency: 2 },
+  { id: 7, type: 'objection', text: 'Presupuesto insuficiente / quiere esperar', deals: [7], frequency: 1 },
+  { id: 8, type: 'objection', text: 'Necesita ver integración con sistemas existentes', deals: [4], frequency: 1 },
+  { id: 9, type: 'win_reason', text: 'Urgencia alta + problema cuantificable', deals: [6], frequency: 1 },
+  { id: 10, type: 'win_reason', text: 'Referido con confianza previa', deals: [5], frequency: 1 },
 ]

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 export default function DealsList({ crm }) {
-  const { deals, stages, activities } = crm
+  const { deals, stages, activities, timeline } = crm
   const [search, setSearch] = useState('')
   const [filterStage, setFilterStage] = useState('all')
   const [sortBy, setSortBy] = useState('created_at')
@@ -22,6 +22,7 @@ export default function DealsList({ crm }) {
   const detail = selected ? deals.find(d => d.id === selected) : null
   const detailStage = detail ? stages.find(s => s.id === detail.stage_id) : null
   const detailActivities = detail ? activities.filter(a => a.deal_id === detail.id) : []
+  const detailTimeline = detail ? timeline.filter(t => t.deal_id === detail.id).sort((a, b) => new Date(b.created_at) - new Date(a.created_at)) : []
 
   return (
     <div style={S.wrap}>
@@ -53,6 +54,7 @@ export default function DealsList({ crm }) {
                 <th style={S.th}>Empresa</th>
                 <th style={S.th}>Etapa</th>
                 <th style={{ ...S.th, textAlign: 'right' }}>Monto</th>
+                <th style={S.th}>Score</th>
                 <th style={S.th}>Prob.</th>
                 <th style={S.th}>Cierre</th>
               </tr>
@@ -77,6 +79,11 @@ export default function DealsList({ crm }) {
                       </span>
                     </td>
                     <td style={{ ...S.td, textAlign: 'right', fontWeight: 600 }}>${fmt(d.amount)}</td>
+                    <td style={S.td}>
+                      {d.score != null && (
+                        <span style={{ background: d.score >= 70 ? '#dcfce7' : d.score >= 40 ? '#fef9c3' : '#fef2f2', color: d.score >= 70 ? '#16a34a' : d.score >= 40 ? '#ca8a04' : '#dc2626', padding: '2px 8px', borderRadius: 6, fontSize: 12, fontWeight: 700 }}>{d.score}</span>
+                      )}
+                    </td>
                     <td style={S.td}>{d.probability}%</td>
                     <td style={S.td}>{d.expected_close ? new Date(d.expected_close).toLocaleDateString('es-MX', { day: 'numeric', month: 'short' }) : '—'}</td>
                   </tr>
@@ -115,6 +122,17 @@ export default function DealsList({ crm }) {
                 {detail.tags.map(t => <span key={t} style={S.tag}>{t}</span>)}
               </div>
             )}
+            {detail.score != null && (
+              <div style={{ marginTop: 16 }}>
+                <div style={S.detailLabel}>Lead Score</div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 4 }}>
+                  <div style={{ flex: 1, height: 8, background: '#f1f5f9', borderRadius: 4, overflow: 'hidden' }}>
+                    <div style={{ width: `${detail.score}%`, height: '100%', borderRadius: 4, background: detail.score >= 70 ? '#16a34a' : detail.score >= 40 ? '#f59e0b' : '#dc2626' }} />
+                  </div>
+                  <span style={{ fontWeight: 700, color: detail.score >= 70 ? '#16a34a' : detail.score >= 40 ? '#f59e0b' : '#dc2626' }}>{detail.score}</span>
+                </div>
+              </div>
+            )}
             {detailActivities.length > 0 && (
               <div style={S.detailSection}>
                 <h3 style={S.detailSectionTitle}>Actividades</h3>
@@ -127,6 +145,20 @@ export default function DealsList({ crm }) {
                 ))}
               </div>
             )}
+            {detailTimeline.length > 0 && (
+              <div style={S.detailSection}>
+                <h3 style={S.detailSectionTitle}>Timeline</h3>
+                {detailTimeline.map(t => (
+                  <div key={t.id} style={{ display: 'flex', gap: 8, padding: '6px 0', borderBottom: '1px solid #f8fafc', fontSize: 13 }}>
+                    <span>{TL_ICONS[t.type] || '📌'}</span>
+                    <div style={{ flex: 1 }}>
+                      <div style={{ color: '#475569', lineHeight: 1.4 }}>{t.content}</div>
+                      <div style={{ fontSize: 11, color: '#94a3b8', marginTop: 2 }}>{t.author} · {new Date(t.created_at).toLocaleDateString('es-MX', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         )}
       </div>
@@ -135,6 +167,7 @@ export default function DealsList({ crm }) {
 }
 
 const ICONS = { call: '📞', email: '📧', meeting: '🤝', task: '✅', note: '📝', whatsapp: '💬' }
+const TL_ICONS = { note: '📝', stage_change: '🔄', whatsapp: '💬', call: '📞', email: '📧', system: '⚙️' }
 
 function fmt(n) { return new Intl.NumberFormat('es-MX').format(Math.round(n)) }
 
